@@ -22,11 +22,11 @@ const initialState = {
 const loginSlice = createSlice({
     name: 'login',
     initialState,
-    // reducers:{
-    //     loggedIn:(state,{payload})=>{
-    //         state.user= payload;
-    //     }
-    // },
+    reducers:{
+        loggedIn:(state,{payload})=>{
+            state.user= payload;
+        }
+    },
     extraReducers:{
         [loginAsync.pending]:()=>{
             console.log("Pending")
