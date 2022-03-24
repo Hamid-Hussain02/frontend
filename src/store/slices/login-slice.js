@@ -7,8 +7,9 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async(payload)=>{
 
     console.log("loginasync",payload)
 
-    const response = await axios.post(`http://127.0.0.1:3000/api/user/login`,{email:payload.email,password:payload.password})
+    const response = await axios.post(`${process.env.REACT_APP_BASE_URL}user/login`,{email:payload.email,password:payload.password})
     console.log(response)
+    localStorage.setItem('token',response.data.token)
     return response.data
 
     
@@ -16,7 +17,8 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async(payload)=>{
 
 const initialState = {
     user:{},
-    loginResponse:false
+    loginResponse:false,
+    token:'',
 }
 
 const loginSlice = createSlice({
@@ -34,7 +36,7 @@ const loginSlice = createSlice({
         [loginAsync.fulfilled]:(state,{payload})=>{
             console.log("Fetched Successfully",payload)
             
-            return {...state, user:payload,loginResponse:true}
+            return {...state, user:payload.user,token:payload.token,loginResponse:true}
 
         },
         [loginAsync.rejected]:()=>{
@@ -45,5 +47,7 @@ const loginSlice = createSlice({
     }
 })
 
+
 export const getLoginResponse = (state)=>state.loginResponse
+export const getLogedInUser = (state)=>state.user
 export default loginSlice.reducer;

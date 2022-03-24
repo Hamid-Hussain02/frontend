@@ -8,7 +8,7 @@ export const signupAsync = createAsyncThunk('signup/signupAsync', async(payload)
     console.log("loginasync",payload)
 
         const {email,name,role,contact,password}=payload
-    const response = await axios.post(`http://127.0.0.1:3000/api/user/create`,{email,name,role,contact,password})
+    const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/create`,{email,name,role,contact,password})
     console.log(response)
     return response.data
 

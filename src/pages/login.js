@@ -34,7 +34,8 @@ const Login=()=>{
   const dispatch= useDispatch()
   const navigate =useNavigate();
   const {loginResponse} = useSelector((state)=>state.login)
-  console.log(loginResponse)
+  const {user} = useSelector((state)=>state.login)
+  console.log(loginResponse,user, useSelector((state)=>state.login))
   
   const handleSubmit = (event) => {
     console.log("jfldskfj")
@@ -61,7 +62,7 @@ const Login=()=>{
     console.log(loginResponse)
     if(loginResponse){
 
-      navigate('/signup', { replace: true })
+      user.role =='admin'?navigate('/admin-dashboard', { replace: true }):navigate('/home', { replace: true })
     }
     
   },[loginResponse])
