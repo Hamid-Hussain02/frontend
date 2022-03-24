@@ -29,7 +29,7 @@ export default function ReservationCard(props) {
        Reservation Details
       </Typography>
       <Typography sx={{ mb: 1.5 }} color="text.secondary">
-        adjective
+        Customer Id : {props.reservation.user_id}
       </Typography>
       <Typography variant="body2">
         Reservation id : {props.reservation.id}
