@@ -15,9 +15,23 @@ export const reservationsAsync = createAsyncThunk('reservations/reservationsAsyn
     
 })
 
+export const setCurrentBill = createAsyncThunk('reservations/setCurrentBill', async(payload)=>{
+
+    console.log("reservationsasync")
+
+
+    // const response = await axios.get(`${process.env.REACT_APP_BASE_URL}reservation/`,)
+    console.log(payload)
+    // localStorage.setItem('token',response.data.token)
+    return payload
+
+    
+})
+
 const initialState = {
     reservations:[],
-    loading:true
+    loading:true,
+    currentBill:{}
 }
 
 const reservationsSlice = createSlice({
@@ -43,6 +57,13 @@ const reservationsSlice = createSlice({
             return {loading:false}
 
         },
+
+        [setCurrentBill.fulfilled]:(state,{payload})=>{
+            console.log("Fetched Successfully",payload)
+            
+            return {...state, currentBill:payload}
+
+        },
        
     }
 })
@@ -50,6 +71,7 @@ const reservationsSlice = createSlice({
 
 export const getAllReservations = (state)=>state.reservations
 export const getReservationsState = (state)=>state.loading
+export const getCurrentBill = (state)=>state.currentBill
 // export const getLoginResponse = (state)=>state.loginResponse
 // export const getLogedInUser = (state)=>state.user
 export default reservationsSlice.reducer;
