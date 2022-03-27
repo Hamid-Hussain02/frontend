@@ -21,6 +21,7 @@ import ReservationTable from '../components/AllReservations.js.js'
 import MakeReservation from '../components/MakeReservation';
 import AllReservations from '../components/AllReservations.js.js';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -93,9 +94,10 @@ let allReservation=true
 
 
 
-export default function MiniDrawer() {
+const  MiniDrawer =()=> {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate()
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -150,7 +152,7 @@ export default function MiniDrawer() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List sx={{mt:'100px'}}>
+        <List sx={{mt:'100px'}}  >
           {['All Reservations','Make Reservation'].map((text, index) => (
             <ListItemButton
               key={text}
@@ -160,7 +162,7 @@ export default function MiniDrawer() {
                 px: 2.5,
               }}
               
-              onClick={()=>changeContent(text)}
+             onClick={()=> index==0?navigate('/admin-dashboard/all-reservations'):navigate('/admin-dashboard/new-reservation')}
             >
               <ListItemIcon
                 sx={{
@@ -201,7 +203,7 @@ export default function MiniDrawer() {
         </List> */}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
+        {/* <DrawerHeader /> */}
         {/* {allReservation==true?(<><ReservationTable/></>):(<><MakeReservation/></>)} */}
         {getRoute()}
         
@@ -209,3 +211,7 @@ export default function MiniDrawer() {
     </Box>
   );
 }
+
+
+
+export default MiniDrawer

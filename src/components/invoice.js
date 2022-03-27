@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
+import { useSelector } from 'react-redux';
+import { getCurrentBill } from '../store/slices/reservations-slice';
 
 
 
@@ -21,18 +23,20 @@ const bull = (
 export default function BasicCard() {
 
 
-  return (
-    <Card sx={{ minWidth: 275 }}>
+  const {currentBill} = useSelector((state)=>state.reservations)
+  console.log(currentBill)
 
-    <CardHeader sx={{bgcolor:'black',height:'50px'}}
+  return (
+    <Box component={'div'}
+    sx={{display:'flex', justifyContent:'center'}}>
+    <Card sx={{ width: 500 }}>
+
+    <CardHeader sx={{bgcolor:'black',height:'50px', color:'white'}}
+    title="Reservation Invoice"
         
-      ><Typography sx={{ fontSize: 14 }}  color="white" gutterBottom >
-      Reservation Card
-    </Typography></CardHeader>
+      ></CardHeader>
       <CardContent>
-        <Typography sx={{ fontSize: 14, bgcolor:'black' }} color="white" gutterBottom >
-          Word of the Day
-        </Typography>
+
         <Typography variant="h5" component="div">
           be{bull}nev{bull}o{bull}lent
         </Typography>
@@ -49,5 +53,6 @@ export default function BasicCard() {
         <Button size="small">Learn More</Button>
       </CardActions>
     </Card>
+    </Box>
   );
 }

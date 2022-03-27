@@ -8,6 +8,8 @@ import Invoice from './components/invoice'
 import Table from './pages/AdminDashboard'
 import AllReservations from './components/AllReservations.js';
 import MakeReservation from './components/MakeReservation';
+import MiniDrawer from './pages/AdminDashboard';
+
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/home" element={<Home/>}/>
           <Route path="/admin-dashboard" element={<AdminDashboard/>}>
+            
           <Route path="/admin-dashboard/all-reservations" element={<AllReservations/>}/>
           <Route path="/admin-dashboard/new-reservation" element={<MakeReservation/>}/>
           </Route>

@@ -93,14 +93,12 @@ export default function BasicTable() {
               key={reservation.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {reservation.id}
-              </TableCell>
-              <TableCell align="right">{reservation.user_id}</TableCell>
+              <TableCell component="th" scope="row">{reservation.id}</TableCell>
+              <TableCell align="right">{reservation.user_id?reservation.user_id:'-'}</TableCell>
               <TableCell align="center">{reservation.room_id?reservation.room_id:'-'}</TableCell>
-              <TableCell align="center">{reservation.bill_id}</TableCell>
+              <TableCell align="center">{reservation.bill_id?reservation.bill_id:'-'}</TableCell>
               <TableCell align="center"><Button variant="outlined" size="small" key={reservation.id} onClick={()=>updateBill(reservation.Bill)}>Invoice</Button></TableCell>
-              <TableCell align="center">{getDate(reservation.createdAt)}</TableCell>
+              <TableCell align="center">{getDate(reservation.createdAt?reservation.createdAt:'-')}</TableCell>
 
             </TableRow>
           ))}

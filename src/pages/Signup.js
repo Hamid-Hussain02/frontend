@@ -15,10 +15,15 @@ import Container from '@mui/material/Container';
 
 
 
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
 
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -31,26 +36,56 @@ const Signup=()=>{
 
     
     const dispatch = useDispatch()
+    const validationSchema = yup.object({
+      email: yup
+        .string('Enter your email')
+        .email('Enter a valid email')
+        .required('Email is required'),
+      password: yup
+        .string('Enter your password')
+        .min(6, 'Password should be of minimum 6 characters length')
+        .required('Password is required'),
+      name: yup
+        .string('Enter your name')
+        .min(2, 'Name should be of minimum 2 characters length')
+        .required('Name is required'),
+      role: yup
+        .string('Enter your role')
+        .required('Role is required'),
+      contact: yup
+        .string('Enter your contact')
+        .required('Contact is required'),
+    });
+    
 
-    const handleSubmit = (event) => {
-        console.log("jfldskfj")
-        event.preventDefault();
-        const data = new FormData(event.currentTarget); 
+      const formik = useFormik({
+        initialValues: {
+          email: '',
+          password: '',
+          name: '',
+          role: '',
+          contact:''
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values) => {
+          alert(JSON.stringify(values, null, 2));
+          const {name,email,password,role,contact}=values
+
+
+          console.log("jfldskfj")
+
         const signupData={
-            name:data.get('name'),
-            role: data.get('role'),
-            email: data.get('email'),
-            password: data.get('password'),
-            contact: data.get('contact'),
+            name,
+            role,
+            email,
+            password,
+            contact,
         }
 
         dispatch(signupAsync(signupData))
-      };
-      
+        },
+      });
 
-      
-
-    
     return(
         
         <Box
@@ -62,22 +97,12 @@ const Signup=()=>{
             mt:'5%'
           }}>
 
-<Card sx={{maxWidth:'600px'}}>
-      {/* <CardMedia
-        component="img"
-        height="50"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt="green iguana"
-      /> */}
+    <Card sx={{maxWidth:'600px'}}>
       <CardContent sx={{p:'10%'}}>
-
-
-
-
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
               margin="normal"
               required
@@ -87,6 +112,10 @@ const Signup=()=>{
               name="name"
               autoComplete="name"
               autoFocus
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
             />
             <TextField
               margin="normal"
@@ -97,6 +126,10 @@ const Signup=()=>{
               name="role"
               autoComplete="role"
               autoFocus
+              value={formik.values.role}
+              onChange={formik.handleChange}
+              error={formik.touched.role && Boolean(formik.errors.role)}
+              helperText={formik.touched.role && formik.errors.role}
             />
 
             <TextField
@@ -108,6 +141,10 @@ const Signup=()=>{
               name="contact"
               autoComplete="contact"
               autoFocus
+              value={formik.values.contact}
+              onChange={formik.handleChange}
+              error={formik.touched.contact && Boolean(formik.errors.contact)}
+              helperText={formik.touched.contact && formik.errors.contact}
             />
 
             <TextField
@@ -119,6 +156,10 @@ const Signup=()=>{
               name="email"
               autoComplete="email"
               autoFocus
+              value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
               margin="normal"
@@ -129,6 +170,10 @@ const Signup=()=>{
               type="password"
               id="password"
               autoComplete="current-password"
+              value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
             />
             <Box   sx={{display:'flex', justifyContent:'space-between'}} >
 
@@ -139,7 +184,7 @@ const Signup=()=>{
             />
             
              <Box sx={{mt:'10px'}}>
-<Link href="/" variant="body2" >
+                <Link href="/" variant="body2" >
                   {"Already have an account ? Log In"}
                 </Link>
                 </Box>
@@ -150,7 +195,7 @@ const Signup=()=>{
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container sx={{justifyContent:'end'}}>
               {/* <Grid item xs>
@@ -165,13 +210,8 @@ const Signup=()=>{
               </Grid>
             </Grid>
           </Box>
-
           </CardContent>
-      {/* <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions> */}
-    </Card>
+        </Card>
 
         </Box>
       

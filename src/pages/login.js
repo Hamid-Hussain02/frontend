@@ -29,6 +29,8 @@ import { flexbox } from '@mui/system';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
+import { useForm } from 'react-hook-form'
+
 
 const theme = createTheme();
 
@@ -39,28 +41,44 @@ const Login=()=>{
   const {loginResponse} = useSelector((state)=>state.login)
   const {user} = useSelector((state)=>state.login)
   console.log(loginResponse,user, useSelector((state)=>state.login))
+  const {register, handleSubmit,error  }=useForm()
+
+
+  const validationSchema = yup.object({
+    email: yup
+      .string('Enter your email')
+      .email('Enter a valid email')
+      .required('Email is required'),
+    password: yup
+      .string('Enter your password')
+      .min(6, 'Password should be of minimum 6 characters length')
+      .required('Password is required'),
+  });
   
-  
-  const handleSubmit = (event) => {
-    console.log("jfldskfj")
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log(data)
+
+    const formik = useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+      },
+      validationSchema: validationSchema,
+      onSubmit: (values) => {
+        console.log("onsubmit")
+        const {email,password}=values
 
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email,
+      password
     });
     const loginData={
-      email: data.get('email'),
-      password: data.get('password'),
+      email,
+      password
     }
 
 
       dispatch(loginAsync(loginData))
-      
-  
-  };
+      },
+    });
 
   useEffect(()=>{
     console.log(loginResponse)
@@ -101,7 +119,7 @@ const Login=()=>{
           <Typography component="h1" variant="h5">
             Log In
           </Typography>
-          <Box component="form"   onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form"   onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -111,6 +129,10 @@ const Login=()=>{
               name="email"
               autoComplete="email"
               autoFocus
+              value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
             />
             <TextField
               margin="normal"
@@ -121,6 +143,10 @@ const Login=()=>{
               type="password"
               id="password"
               autoComplete="current-password"
+              value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
             />
             <Box sx={{display:'flex',  justifyContent:'space-between'}}>
             <FormControlLabel
