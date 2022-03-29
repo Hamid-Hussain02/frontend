@@ -15,6 +15,8 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getUserReservation } from '../store/slices/cutomer-slice';
+import UserProfile from '../components/userProfile'
+// import '../assets/colors/colors.scss'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -116,6 +118,7 @@ const Home =()=> {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="My Reservation" {...a11yProps(0)} />
           <Tab label="Invoice" {...a11yProps(1)} />
+          <Tab label="Profile" {...a11yProps(2)} />
 
         </Tabs>
       </Box>
@@ -149,6 +152,11 @@ const Home =()=> {
       <TabPanel value={value} index={1}>
     
         <UserInvoice bill={reservation.Bill}/>
+      </TabPanel>
+
+      <TabPanel value={value} index={2}>
+    
+        <UserProfile />
       </TabPanel>
       
         </Box>

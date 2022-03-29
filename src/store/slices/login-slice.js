@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { customAxios } from '../../services/auth-header'
 
 
     
@@ -15,10 +16,25 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async(payload)=>{
     
 })
 
+
+
+export const updateUser = createAsyncThunk('userReservation/updateUser', async(payload)=>{
+
+    console.log("getuserreservation")
+
+    const response = await customAxios.post(`${process.env.REACT_APP_BASE_URL}user/update`,{id:payload.id,name:payload.name,contact:payload.contact})
+    console.log(response)
+    // localStorage.setItem('token',response.data.token)
+    return response.data
+
+    
+})
+
 const initialState = {
     user:{},
     loginResponse:false,
     token:'',
+    updateUserResponse:false
 }
 
 const loginSlice = createSlice({
@@ -43,6 +59,22 @@ const loginSlice = createSlice({
             console.log("Rejected");
 
         },
+
+
+        [updateUser.pending]:()=>{
+            console.log("Pending")
+        },
+        [updateUser.fulfilled]:(state,{payload})=>{
+            console.log("Fetched Successfully",payload)
+            
+            return {...state, updateUserResponse:true}
+
+        },
+        [updateUser.rejected]:()=>{
+            console.log("Rejected");
+            return {updateUserResponse:false}
+
+        }
        
     }
 })

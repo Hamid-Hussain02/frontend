@@ -25,6 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import { switchComponent } from '../store/slices/reservations-slice.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react'
+import UserProfile from '../components/userProfile.js';
 
 const drawerWidth = 240;
 
@@ -107,7 +108,7 @@ const  MiniDrawer =()=> {
   const dispatch = useDispatch()
 
   const [selectedComponent, setselectedComponent] = useState({
-    value: true,
+    value: 'allReservations',
   });
 
   const handleDrawerOpen = () => {
@@ -147,7 +148,7 @@ const  MiniDrawer =()=> {
 
   const getComponent=(index)=>{
     console.log("getcomponent",index)
-    let value=index==0?true:false
+    let value=index==0?'allReservations':index==1?'makeReservation':'Profile'
     setselectedComponent({ ...selectedComponent, value });
     // dispatch(switchComponent(!allReservationComponent))
   }
@@ -189,7 +190,7 @@ const  MiniDrawer =()=> {
         </DrawerHeader>
         <Divider />
         <List sx={{mt:'100px'}}  >
-          {['All Reservations','Make Reservation'].map((text, index) => (
+          {['All Reservations','Make Reservation', 'Profile'].map((text, index) => (
             <ListItemButton
               key={text}
               sx={{
@@ -244,7 +245,7 @@ const  MiniDrawer =()=> {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {selectedComponent.value?(<><ReservationTable/></>):(<><MakeReservation/></>)}
+        {selectedComponent.value=='allReservations'?(<><ReservationTable/></>):selectedComponent.value=='makeReservation'?(<><MakeReservation/></>):(<><UserProfile/></>)}
         
         
       </Box>

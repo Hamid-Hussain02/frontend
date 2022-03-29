@@ -21,6 +21,10 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect } from 'react';
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 
 
 
@@ -184,13 +188,18 @@ export default function OutlinedCard() {
       {/* <Button onClick={handleClick}>Open simple snackbar</Button> */}
       <Snackbar
         open={open}
+        anchorOrigin={{ vertical:'top', horizontal:'right' }}
 
 
         autoHideDuration={6000}
         onClose={handleClose}
         message="Reservation Created"
         action={action}
-      />
+      >
+      <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+    Reservation Created
+  </Alert>
+  </Snackbar>
     </Box>
   );
 }
