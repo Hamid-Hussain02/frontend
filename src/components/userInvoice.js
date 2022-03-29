@@ -16,11 +16,11 @@ import TableRow from '@mui/material/TableRow';
 
 
 
-export default function BasicCard() {
+export default function BasicCard(props) {
 
 
-  const {currentBill} = useSelector((state)=>state.reservations)
-  console.log(currentBill)
+  const {user} = useSelector((state)=>state.login)
+  console.log(user)
 
 
   const getDate = (date)=> {
@@ -52,40 +52,48 @@ export default function BasicCard() {
         </TableHead>
         <TableBody>
 
-            <TableRow key={currentBill.id}>
+        <TableRow key={user.name}>
+              <TableCell component="th" scope="row">
+                {'Customer Name'}
+              </TableCell>
+              <TableCell align="right" sx={{textTransform:'capitalize'}}>{user.name}</TableCell>
+
+            </TableRow>
+
+            <TableRow key={props.bill.id}>
               <TableCell component="th" scope="row">
                 {'Customer Id'}
               </TableCell>
-              <TableCell align="right">{currentBill.customer_id}</TableCell>
+              <TableCell align="right">{props.bill.customer_id}</TableCell>
 
             </TableRow>
   
-            <TableRow key={currentBill.reservation_id}>
+            <TableRow key={props.bill.reservation_id}>
               <TableCell component="th" scope="row">
                 {'Reservation Id'}
               </TableCell>
-              <TableCell align="right">{currentBill.reservation_id}</TableCell>
+              <TableCell align="right">{props.bill.reservation_id}</TableCell>
 
 
             </TableRow>
 
 
-            <TableRow key={currentBill.createdAt}>
+            <TableRow key={props.bill.createdAt}>
               <TableCell component="th" scope="row">
                 {'Date'}
               </TableCell>
-              <TableCell align="right">{getDate(currentBill.createdAt)}</TableCell>
+              <TableCell align="right">{getDate(props.bill.createdAt)}</TableCell>
 
 
             </TableRow>
 
             
 
-            <TableRow key={currentBill.amount}>
+            <TableRow key={props.bill.amount}>
               <TableCell component="th" scope="row">
                 {'Amount'}
               </TableCell>
-              <TableCell align="right">${currentBill.amount}</TableCell>
+              <TableCell align="right">${props.bill.amount}</TableCell>
 
 
             </TableRow>

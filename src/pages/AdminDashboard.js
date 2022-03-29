@@ -22,6 +22,9 @@ import MakeReservation from '../components/MakeReservation';
 import AllReservations from '../components/AllReservations.js.js';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { switchComponent } from '../store/slices/reservations-slice.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react'
 
 const drawerWidth = 240;
 
@@ -96,8 +99,16 @@ let allReservation=true
 
 const  MiniDrawer =()=> {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const navigate = useNavigate()
+  const { allReservationComponent } = useSelector((state)=>state.reservations)
+  console.log("allreservationcomponent",allReservationComponent)
+  
+  const dispatch = useDispatch()
+
+  const [selectedComponent, setselectedComponent] = useState({
+    value: true,
+  });
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -118,10 +129,35 @@ const  MiniDrawer =()=> {
     setOpen(!open)
   }
 
+  // useEffect(()=>{
+  //   console.log("useeffect",allReservation)
+  //   return allReservation? (<AllReservations/>):(<MakeReservation/>)
+  // },[allReservationComponent])
+
+
+  const getSelectedComponent=()=>{
+    return allReservationComponent? (<AllReservations/>):(<MakeReservation/>)
+  }
+
   useEffect(()=>{
-    console.log("useeffect",allReservation)
-    return allReservation? (<AllReservations/>):(<MakeReservation/>)
-  },[allReservation])
+    console.log("useeffect",allReservationComponent)
+    getSelectedComponent()
+    
+  },[allReservationComponent])
+
+  const getComponent=(index)=>{
+    console.log("getcomponent",index)
+    let value=index==0?true:false
+    setselectedComponent({ ...selectedComponent, value });
+    // dispatch(switchComponent(!allReservationComponent))
+  }
+
+  
+  const logOut = ()=>{
+    localStorage.clear()
+    navigate('/',{replace:true})
+  }
+ 
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -162,7 +198,7 @@ const  MiniDrawer =()=> {
                 px: 2.5,
               }}
               
-             onClick={()=> index==0?navigate('/admin-dashboard/all-reservations'):navigate('/admin-dashboard/new-reservation')}
+             onClick={()=>getComponent(index)}
             >
               <ListItemIcon
                 sx={{
@@ -176,17 +212,21 @@ const  MiniDrawer =()=> {
               <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           ))}
-        </List>
-        {/* <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItemButton
-              key={text}
+
+
+
+<ListItemButton
+
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
+                mt:'60%'
               }}
+
+              onClick={()=>logOut()}
+              
+
             >
               <ListItemIcon
                 sx={{
@@ -195,17 +235,17 @@ const  MiniDrawer =()=> {
                   justifyContent: 'center',
                 }}
               >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <InboxIcon />
               </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary='Logout' sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
-          ))}
-        </List> */}
+        </List>
+        
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {/* <DrawerHeader /> */}
-        {/* {allReservation==true?(<><ReservationTable/></>):(<><MakeReservation/></>)} */}
-        {getRoute()}
+        <DrawerHeader />
+        {selectedComponent.value?(<><ReservationTable/></>):(<><MakeReservation/></>)}
+        
         
       </Box>
     </Box>

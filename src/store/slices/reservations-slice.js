@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import  {customAxios }  from '../../services/auth-header'
+
+
 
 
     
@@ -7,7 +10,7 @@ export const reservationsAsync = createAsyncThunk('reservations/reservationsAsyn
 
     console.log("reservationsasync")
 
-    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}reservation/`,)
+    const response = await customAxios.get(`${process.env.REACT_APP_BASE_URL}reservation/`,)
     console.log(response)
     // localStorage.setItem('token',response.data.token)
     return response.data
@@ -19,9 +22,53 @@ export const setCurrentBill = createAsyncThunk('reservations/setCurrentBill', as
 
     console.log("reservationsasync")
 
+    
 
-    // const response = await axios.get(`${process.env.REACT_APP_BASE_URL}reservation/`,)
+
+    // const response = await axios.get(`${process.env.REACT_APP_BASE_URL}reservation/`,{user_id,room_id,bill_id})
     console.log(payload)
+    // localStorage.setItem('token',response.data.token)
+    return payload
+
+    
+})
+
+export const createReservation = createAsyncThunk('reservations/createReservation', async(payload)=>{
+    
+
+    console.log("reservationsasync")
+
+    const { user_id, room_id, bill_id } = payload
+    const response = await customAxios.post(`${process.env.REACT_APP_BASE_URL}reservation/create`,{user_id,room_id,bill_id})
+    console.log(payload,response)
+    // localStorage.setItem('token',response.data.token)
+    return response.data
+
+    
+})
+
+export const closeSnackbar = createAsyncThunk('reservations/closeSnackbar', async()=>{
+    
+
+    console.log("closeSnackbar")
+
+    // const { user_id, room_id, bill_id } = payload
+    // const response = await customAxios.post(`${process.env.REACT_APP_BASE_URL}reservation/create`,{user_id,room_id,bill_id})
+    // console.log(payload,response)
+    // localStorage.setItem('token',response.data.token)
+    return 
+
+    
+})
+
+export const switchComponent = createAsyncThunk('reservations/switchComponent', async(payload)=>{
+    
+
+    console.log("closeSnackbar",payload)
+
+    // const { user_id, room_id, bill_id } = payload
+    // const response = await customAxios.post(`${process.env.REACT_APP_BASE_URL}reservation/create`,{user_id,room_id,bill_id})
+    // console.log(payload,response)
     // localStorage.setItem('token',response.data.token)
     return payload
 
@@ -31,7 +78,9 @@ export const setCurrentBill = createAsyncThunk('reservations/setCurrentBill', as
 const initialState = {
     reservations:[],
     loading:true,
-    currentBill:{}
+    currentBill:{},
+    createReservationResponse:false,
+    allReservationComponent:true
 }
 
 const reservationsSlice = createSlice({
@@ -62,6 +111,41 @@ const reservationsSlice = createSlice({
             console.log("Fetched Successfully",payload)
             
             return {...state, currentBill:payload}
+
+        },
+
+        [createReservation.fulfilled]:(state,{payload})=>{
+            console.log("Fetched Successfully",payload)
+            
+            return {...state, createReservationResponse:true}
+
+        },
+
+        [createReservation.pending]:()=>{
+            console.log("Pending")
+            
+            // return {...state, currentBill:payload}
+
+        },
+
+        [createReservation.rejected]:()=>{
+            console.log("Rejected")
+            
+            // return {...state, currentBill:payload}
+
+        },
+
+        [closeSnackbar.fulfilled]:()=>{
+            console.log("Rejected")
+            
+            return {createReservationResponse:false}
+
+        },
+
+        [switchComponent.fulfilled]:(payload)=>{
+            console.log("Rejected")
+            
+            return {allReservationComponent:payload}
 
         },
        

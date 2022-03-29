@@ -12,20 +12,24 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { useEffect } from 'react';
 
 
 
 
-export default function BasicCard() {
+export default function UserReservation(props) {
 
 
   const {currentBill} = useSelector((state)=>state.reservations)
-  console.log(currentBill)
+  const { user } = useSelector((state)=>state.login)
+  console.log(currentBill,props)
 
 
   const getDate = (date)=> {
     return new Date(date).toLocaleDateString()
 }
+
+useEffect(()=>{},[])
 
   return (
     <Box component={'div'}
@@ -33,7 +37,7 @@ export default function BasicCard() {
     <Card sx={{ width: 500 }}>
 
     <CardHeader sx={{bgcolor:'#1976d2',height:'50px', color:'white'}}
-    title="Reservation Invoice"
+    title="Reservation Details"
         
       ></CardHeader>
       <CardContent>
@@ -46,49 +50,58 @@ export default function BasicCard() {
                 <caption>Thank you. Have a nice day...!</caption>
         <TableHead>
           <TableRow>
-            <TableCell align="center" colSpan={2}>Invoice</TableCell>
+            <TableCell align="center" colSpan={2}>Reservation</TableCell>
 
           </TableRow>
         </TableHead>
         <TableBody>
 
-            <TableRow key={currentBill.id}>
+
+        <TableRow key={user.name}>
+              <TableCell component="th" scope="row">
+                {'Customer Name'}
+              </TableCell>
+              <TableCell align="right" sx={{textTransform:'capitalize'}}>{user.name}</TableCell>
+
+
+            </TableRow>
+
+            <TableRow key={props.reservation.user_id}>
               <TableCell component="th" scope="row">
                 {'Customer Id'}
               </TableCell>
-              <TableCell align="right">{currentBill.customer_id}</TableCell>
+              <TableCell align="right">{props.reservation.user_id}</TableCell>
 
             </TableRow>
   
-            <TableRow key={currentBill.reservation_id}>
+            
+            <TableRow key={props.reservation.id}>
               <TableCell component="th" scope="row">
                 {'Reservation Id'}
               </TableCell>
-              <TableCell align="right">{currentBill.reservation_id}</TableCell>
+              <TableCell align="right">{props.reservation.id}</TableCell>
 
 
             </TableRow>
 
 
-            <TableRow key={currentBill.createdAt}>
+            <TableRow key={props.reservation.createdAt}>
               <TableCell component="th" scope="row">
                 {'Date'}
               </TableCell>
-              <TableCell align="right">{getDate(currentBill.createdAt)}</TableCell>
+              <TableCell align="right">{getDate(props.reservation.createdAt)}</TableCell>
 
 
             </TableRow>
 
             
 
-            <TableRow key={currentBill.amount}>
+            {/* <TableRow key={currentBill.amount}>
               <TableCell component="th" scope="row">
                 {'Amount'}
               </TableCell>
               <TableCell align="right">${currentBill.amount}</TableCell>
-
-
-            </TableRow>
+            </TableRow> */}
 
 
           
