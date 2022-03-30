@@ -103,17 +103,10 @@ const Login=()=>{
             alignItems: 'center',
           }}
         >
-          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}> */}
-            {/* <LockOutlinedIcon /> */}
-          {/* </Avatar> */}
+          
 
           <Card >
-      {/* <CardMedia
-        component="img"
-        height="50"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt="green iguana"
-      /> */}
+    
       <CardContent sx={{p:'10%'}}>
 
           <Typography component="h1" variant="h5">
@@ -180,16 +173,10 @@ const Login=()=>{
           </Box>
 
           </CardContent>
-      {/* <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions> */}
+      
     </Card>
         </Box>
 
-
-    //   </Container>
-    // </ThemeProvider>
     )
 }
 

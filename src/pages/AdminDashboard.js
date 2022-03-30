@@ -130,10 +130,7 @@ const  MiniDrawer =()=> {
     setOpen(!open)
   }
 
-  // useEffect(()=>{
-  //   console.log("useeffect",allReservation)
-  //   return allReservation? (<AllReservations/>):(<MakeReservation/>)
-  // },[allReservationComponent])
+
 
 
   const getSelectedComponent=()=>{
@@ -150,7 +147,6 @@ const  MiniDrawer =()=> {
     console.log("getcomponent",index)
     let value=index==0?'allReservations':index==1?'makeReservation':'Profile'
     setselectedComponent({ ...selectedComponent, value });
-    // dispatch(switchComponent(!allReservationComponent))
   }
 
   

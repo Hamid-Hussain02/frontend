@@ -29,7 +29,7 @@ export default function BasicCard() {
 
   return (
     <Box component={'div'}
-    sx={{display:'flex',  flexDirection:'column', alignItems:'center'}}>
+    sx={{display:'flex',  flexDirection:'column', alignItems:'center', mt:'5%'}}>
     <Card sx={{ width: 500 }}>
 
     <CardHeader sx={{bgcolor:'#1976d2',height:'50px', color:'white'}}

@@ -48,23 +48,16 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const UserProfile=()=> {
 
-
-  const {currentBill} = useSelector((state)=>state.reservations)
-  const { user } = useSelector((state)=>state.login)
-//   console.log(currentBill,props)
-  const {updateUserResponse}= useSelector((state)=>state.login)
+  
+  
+    const {updateUserResponse}= useSelector((state)=>state.login)
+    const { user } = useSelector((state)=>state.login)
   
 
   console.log(updateUserResponse)
   const dispatch = useDispatch()
 
-  const [values, setValues] = React.useState({
-    amount: '',
-    password: '',
-    weight: '',
-    weightRange: '',
-    showPassword: false,
-  });
+ 
 
   const validationSchema = yup.object({
     name: yup
@@ -163,11 +156,10 @@ const action = (
 
 
 
-      {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
 
       <Grid container spacing={2}>
         <Grid item xs={6} >
-        {/* <TextField id="standard-basic" label="Standard" variant="standard" value={user.name}/> */}
+
         <TextField
           label="Name"
           id="filled-size-small"
@@ -180,23 +172,9 @@ const action = (
           helperText={formik.touched.name && formik.errors.name}
         />
 
-{/* <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={formik.values.name}
-          onChange={formik.handleChange}
-          error={formik.touched.name && Boolean(formik.errors.name)}
-          helperText={formik.touched.name && formik.errors.name}
-            /> */}
+
         </Grid>
         <Grid item xs={6} >
-        {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
         <TextField
           label="Email"
           id="filled-size-small"
@@ -210,7 +188,7 @@ const action = (
         </Grid>
 
         <Grid item xs={6} >
-        {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
+
         <TextField
           label="Contact"
           id="filled-size-small"
@@ -224,7 +202,6 @@ const action = (
         />
         </Grid>
         <Grid item xs={6} >
-        {/* <TextField id="standard-basic" label="Standard" variant="standard" /> */}
         <TextField
           label="Role"
           id="filled-size-small"
