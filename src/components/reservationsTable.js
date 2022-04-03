@@ -107,6 +107,7 @@ export default function StickyHeadTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
+                        
                         <TableCell key={column.id} align={column.align}>
                           {value?value:'-'}
                         </TableCell>
