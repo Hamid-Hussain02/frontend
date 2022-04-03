@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { getDialogContentTextUtilityClass } from '@mui/material';
 
 import { getAllReservations, reservationsAsync, getReservationsState } from '../store/slices/reservations-slice';
+import Modal from '../components/modal'
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -48,7 +49,8 @@ export default function BasicTable() {
     function updateBill(bill){
       console.log("jlskdf",bill)
       dispatch(setCurrentBill(bill))
-      navigate('/invoice')
+      return(<Modal/>)
+      // navigate('/invoice')
     }
 
 
@@ -97,7 +99,7 @@ export default function BasicTable() {
               <TableCell align="right">{reservation.user_id?reservation.user_id:'-'}</TableCell>
               <TableCell align="center">{reservation.room_id?reservation.room_id:'-'}</TableCell>
               <TableCell align="center">{reservation.bill_id?reservation.bill_id:'-'}</TableCell>
-              <TableCell align="center"><Button variant="outlined" size="small" key={reservation.id} onClick={()=>updateBill(reservation.Bill)}>Invoice</Button></TableCell>
+              <TableCell align="center" onClick={()=>updateBill(reservation.Bill)}><Modal/></TableCell>
               <TableCell align="center">{getDate(reservation.createdAt?reservation.createdAt:'-')}</TableCell>
 
             </TableRow>

@@ -87,7 +87,7 @@ const Home =()=> {
         dispatch(getUserReservation(user.id))
     },[])
   return (
-    <Box sx={{ flexGrow: 1}}>
+    <Box sx={{ flexGrow: 1}} >
       <Grid container spacing={2} sx={{height:'100vh'}}>
         <Grid item xs sx={{bgcolor:'white',margin:'auto'}}>
 
